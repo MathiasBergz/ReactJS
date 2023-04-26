@@ -41,3 +41,13 @@ export const Profile = styled.div`
         }
     }
 `
+
+export const Logout = styled.button`
+    background: none;
+    border: none;
+
+    > svg {
+        color: ${({ theme }) => theme.COLORS.GRAY_100};
+        font-size: 36px;
+    }
+`
