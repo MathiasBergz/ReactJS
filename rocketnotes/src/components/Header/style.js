@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.header`
     grid-area: header;
 
-    height: 105;
+    height: 10.5rem;
     width: 100%;
 
     border-bottom: 1px solid ${({ theme }) => theme.COLORS.BACKGROUND_700};
@@ -11,7 +11,7 @@ export const Container = styled.header`
     display: flex;
     justify-content: space-between;
 
-    padding: 0 80px;
+    padding: 0 8rem;
 `
 
 export const Profile = styled.div`
@@ -19,24 +19,24 @@ export const Profile = styled.div`
     align-items: center;
 
     > img {
-        width: 56px;
-        height: 56px;
+        width: 5.6rem;
+        height: 5.6rem;
         border-radius: 50%;
     }
 
     > div {
         display: flex;
         flex-direction: column;
-        margin-left: 9px;
-        line-height: 24px;
+        margin-left: 0.9rem;
+        line-height: 2.4rem;
 
         span {
-            font-size: 14px;
+            font-size: 1.4rem;
             color: ${({ theme }) => theme.COLORS.GRAY_100};
         }
 
         strong {
-            font-size: 18px;
+            font-size: 1.8rem;
             color: ${({ theme }) => theme.COLORS.WHITE};
         }
     }
@@ -48,6 +48,6 @@ export const Logout = styled.button`
 
     > svg {
         color: ${({ theme }) => theme.COLORS.GRAY_100};
-        font-size: 36px;
+        font-size: 3.6rem;
     }
 `
