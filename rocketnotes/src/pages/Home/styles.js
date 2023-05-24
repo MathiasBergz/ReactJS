@@ -52,6 +52,7 @@ export const Search = styled.div`
 `
 
 export const Content = styled.div`
+    margin-top: 6.4rem;
     grid-area: content;
     padding: 0 6.4rem;
     overflow-y: auto;
