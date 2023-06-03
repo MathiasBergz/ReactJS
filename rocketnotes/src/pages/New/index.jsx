@@ -35,13 +35,13 @@ export function New() {
 
                     <Section title="Links uteis" >
                         {
-                            links.map((link, index) => {
+                            links.map((link, index) => (
                                 <NoteItem
                                 key={String(index)} 
                                 value={link}
                                 onClick={() => {}}
                                 />
-                            })
+                            ))
                         }
                         
                         <NoteItem 
