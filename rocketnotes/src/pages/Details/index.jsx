@@ -1,4 +1,7 @@
 import { Container, Links, Content } from './styles.js'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { api } from '../../services/api.js'
 
 import { Button } from '../../components/button'
 import { Header } from '../../components/Header'
@@ -7,38 +10,84 @@ import { Tags } from '../../components/Tags'
 import { ButtonText } from '../../components/ButtonText'
 
 export function Details() {
+  const [data, setData] = useState(null)
+
+  const params = useParams()
+  const navigate = useNavigate()
+
+  function handleBack() {
+    navigate(-1)
+  }
+
+  async function handleRemove() {
+    const confirm = window.confirm("Deseja realmente remover a nota?")
+
+    if(confirm) {
+      await api.delete(`/notes/${params.id}`)
+      handleBack()
+    }
+  }
+
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`)
+      setData(response.data)
+    }
+
+    fetchNote()
+  }, [])
+
   return(
     <Container> 
       <Header />
-      <main>
-        <Content>
-          <ButtonText title="Excluir nota"/>
-          
-          <h1>Introdução ao React</h1>
-          <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-          when an unknown printer took a galley of type and scrambled it to make a type 
-          specimen book. It has survived not only five centuries, but also the leap into 
-          electronic typesetting, remaining essentially unchanged. It was popularised in 
-          the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-          and more recently with desktop publishing software like Aldus PageMaker including 
-          versions of Lorem Ipsum.
-          </p>
-          
-          <Section title="Links uteis">
-            <Links>
-              <li><a href="#">Link 1</a></li>          
-              <li><a href="#">Link 1</a></li>          
-            </Links>
-          </Section>
-          <Section title="Marcadores">
-            <Tags title="express"/>
-            <Tags title="nodejs"/>
-          </Section>
-          <Button title="Voltar"/>
-        </Content>
-      </main>
+      {
+        data && 
+        <main>
+          <Content>
+            <ButtonText title="Excluir nota" onClick={handleRemove}/>
+            
+            <h1>{data.title}</h1>
+            <p>
+            {data.description}
+            </p>
+            
+            {
+              data.links &&
+              <Section title="Links uteis">
+               <Links>
+                  {
+                    data.links.map(link => (
+                      <li key={String(link.id)}>
+                        <a href={link.url} target="_blank">
+                          {link.url}
+                        </a>
+                      </li>  
+                    ))
+                  }                
+                </Links>
+              </Section>
+
+            }
+
+            {
+              data.tags &&
+              <Section title="Marcadores">
+                {
+                  data.tags.map(tag => (
+                    <Tags
+                      key={String(tag.id)} 
+                      title={tag.name}
+                    />
+                  ))
+                }
+              </Section>
+            }
+
+
+            <Button title="Voltar" onClick={handleBack}/>
+          </Content>
+        </main>
+      }
     </Container>
   )
 }
